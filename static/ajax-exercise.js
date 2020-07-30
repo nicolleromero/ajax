@@ -5,7 +5,8 @@
 $('#get-fortune-button').on('click', () => {
   $.get('/fortune', (response) => {
 
-    $(`#fortune-text`).html(response);
+    // $(`#fortune-text`).html(response);
+    $(`#fortune-text`).load('/fortune');
 
   });
 });
@@ -26,6 +27,7 @@ $('#weather-form').on('submit', (evt) => {
 
   $.get('/weather', formData, (response) => {
     $(`#weather-info`).html(`The forecast is: ${response.forecast} The temperature will be: ${response.temp}`);
+    // $('#weather-info').load('/weather');
   });
 
   // $.post('/weather', formData, (response) => {
@@ -39,10 +41,11 @@ $('#weather-form').on('submit', (evt) => {
 $("#order-form").on('submit', (evt) => {
   evt.preventDefault();
 
-  const formInputs = {
-    melon_type: $('#melon-type-field').val(),
-    qty: $('#qty-field').val()
-  };
+  // const formInputs = {
+  //   melon_type: $('#melon-type-field').val(),
+  //   qty: $('#qty-field').val()
+  // };
+  const formInputs = $('#order-form').serialize();
 
 
   $.post('/order-melons', formInputs, (response) => {
