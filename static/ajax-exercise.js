@@ -3,11 +3,10 @@
 // Part 1
 
 $('#get-fortune-button').on('click', () => {
-  $.get('/replaceMe', (response) => {
-    //
-    // This is the body of the callback function for $.get!
-    // TODO: use `response` to update the text in `div#fortune-text`
-    //
+  $.get('/fortune', (response) => {
+
+    $(`#fortune-text`).html(response);
+
   });
 });
 
@@ -18,19 +17,19 @@ $('#weather-form').on('submit', (evt) => {
   evt.preventDefault();
 
   const formData = {
-    // TODO: select the zipcode input
-    zipcode: $('REPLACE THIS').val()
+
+    zipcode: $('#zipcode-field').val()
   };
 
   // TODO: choose a request method (GET or POST) by uncommenting one of
   // these blocks of code
 
-  // $.get('/replaceMe', formData, (response) => {
-  //   // Fill in the callback function
-  // });
+  $.get('/weather', formData, (response) => {
+    $(`#weather-info`).html(`The forecast is: ${response.forecast} The temperature will be: ${response.temp}`);
+  });
 
-  // $.post('/replaceMe', formData, (response) => {
-  //   // Fill in the callback function
+  // $.post('/weather', formData, (response) => {
+
   // });
 });
 
@@ -40,8 +39,18 @@ $('#weather-form').on('submit', (evt) => {
 $("#order-form").on('submit', (evt) => {
   evt.preventDefault();
 
-  // TODO: create an object to store key-value pairs that'll be sent to
-  // the server
+  const formInputs = {
+    melon_type: $('#melon-type-field').val(),
+    qty: $('#qty-field').val()
+  };
+
+
+  $.post('/order-melons', formInputs, (response) => {
+    $(`#order-status`).html(`${response.code}: ${response.msg}`)
+    if (response.code === 'ERROR') {
+      $(`#order-status`).addClass('order-error');
+    }
+  });
 
   // TODO: make a request to /order-melons
   //
